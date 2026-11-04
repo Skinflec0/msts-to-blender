@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>msts-to-glb: MSTS and Open Rails models in Blender</title>
+<meta name="description" content="Convert Train Simulator .s shapes and .ace textures to .glb. One Python script.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚂</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500&display=swap">
+<style>
+:root{--paper:#f6f5f1;--ink:#23272b;--steel:#5d676f;--rail:#d8dcdf;--amber:#e8a200;--code:#23272b;--codetext:#eceff1}
+@media (prefers-color-scheme:dark){:root{--paper:#1b1e21;--ink:#eceae4;--steel:#9aa5ad;--rail:#363c41;--code:#101214;--codetext:#eceff1}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 Barlow,system-ui,sans-serif}
+main{max-width:46rem;margin:0 auto;padding:3rem 1.25rem 4rem}
+h1{font:700 clamp(2.6rem,9vw,4.5rem)/.95 "Barlow Condensed",Impact,sans-serif;margin:0 0 1rem;letter-spacing:-.01em}
+h2{font:600 1.6rem/1.2 "Barlow Condensed",sans-serif;margin:2.75rem 0 .75rem;padding-top:.75rem;border-top:3px solid var(--amber);display:inline-block}
+p{margin:.5rem 0;max-width:38rem}
+.lead{font-size:1.25rem;color:var(--steel)}
+pre{background:var(--code);color:var(--codetext);padding:1rem 1.1rem;border-radius:4px;overflow-x:auto;font:.95rem/1.55 ui-monospace,Menlo,Consolas,monospace;margin:.75rem 0}
+.btn{display:inline-block;background:var(--amber);color:#1b1e21;font-weight:500;padding:.65rem 1.1rem;border-radius:4px;text-decoration:none;margin:.5rem .5rem 0 0}
+.btn.alt{background:transparent;color:var(--ink);border:2px solid var(--rail)}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+ul{padding-left:1.2rem;max-width:38rem}li{margin:.25rem 0}
+table{border-collapse:collapse;width:100%;font-size:.95rem}td,th{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--rail);vertical-align:top}
+code{font:.92em ui-monospace,Menlo,Consolas,monospace}
+.scroll{overflow-x:auto}
+footer{margin-top:3rem;color:var(--steel);font-size:.9rem}
+</style>
+</head>
+<body>
+<main>
+<h1>Your Train Simulator models, in Blender.</h1>
+<p class="lead">Turns MSTS and Open Rails <code>.s</code> shapes and <code>.ace</code> textures into <code>.glb</code> files. One Python script. Point it at a folder and wait.</p>
+<a class="btn" href="https://github.com/YOUR-USERNAME/msts-to-glb">Get it on GitHub</a>
+<a class="btn alt" href="https://github.com/YOUR-USERNAME/msts-to-glb/archive/refs/heads/main.zip">Download ZIP</a>
+
+<h2>Run it</h2>
+<pre>pip install numpy Pillow
+
+python msts_to_glb.py                  # pick a folder in a dialog
+python msts_to_glb.py path/to/folder   # convert every .s inside
+python msts_to_glb.py wagon.s -o out   # one file, custom output folder</pre>
+<p>Then in Blender choose <strong>File &gt; Import &gt; glTF 2.0</strong>. On Windows you can drag a folder onto the script instead.</p>
+
+<h2>What you get</h2>
+<ul>
+<li>Meshes with normals and UVs, axes converted from MSTS to glTF</li>
+<li>The full node hierarchy: bogies, wheels, doors keep their transforms</li>
+<li>Textures embedded in the file, with cut-out and soft alpha detected</li>
+<li>A log line for every missing or unreadable texture, and the batch keeps going</li>
+</ul>
+
+<h2>Options</h2>
+<div class="scroll"><table>
+<tr><td><code>-o DIR</code></td><td>Write the <code>.glb</code> files to another folder</td></tr>
+<tr><td><code>-t DIR</code></td><td>Search an extra folder for textures</td></tr>
+<tr><td><code>--lod N</code></td><td>Export a lower level of detail; 0 is the best</td></tr>
+<tr><td><code>--skip-existing</code></td><td>Don't overwrite earlier output</td></tr>
+<tr><td><code>--double-sided</code></td><td>Show both sides of every face</td></tr>
+<tr><td><code>--zfight 0.002</code></td><td>Nudge overlapping surfaces apart</td></tr>
+</table></div>
+
+<h2>Not supported yet</h2>
+<ul>
+<li>Text-format <code>.s</code> files: re-save them as binary first</li>
+<li>DXT-compressed <code>.ace</code> textures: the model converts with a grey placeholder</li>
+<li>Animations: only the static pose is exported</li>
+</ul>
+
+<footer>MIT licence. Not affiliated with Microsoft or Open Rails.</footer>
+</main>
+</body>
+</html>
