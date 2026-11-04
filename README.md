@@ -1,4 +1,4 @@
-# msts-to-glb
+# msts-to-blender
 
 Convert **Microsoft Train Simulator / Open Rails** models (`.s` shapes and `.ace` textures) into `.glb` files that open straight in **Blender**, three.js, Godot, Unity and anything else that reads glTF 2.0.
 
